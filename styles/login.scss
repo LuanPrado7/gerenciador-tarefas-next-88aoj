@@ -1,0 +1,89 @@
+@import './config.scss';
+
+.container-login {
+
+    .logo {
+        display: block;
+        margin: auto;
+        width: 178.35px;
+        margin-bottom: 47px;
+    }
+
+    .form {
+        div {
+            display: flex;
+            padding: 10px;
+
+            img {
+                width: 20px;
+                height: 20px;
+                margin-right: 18px;
+            }
+
+            input {
+                width: 224px;
+                font-size: 14px;
+                letter-spacing: 0.01em;
+                color: $primaryColor;
+                border-radius: 0px;
+                border-top-width: 0px;
+                border-left-width: 0px;
+                border-right-width: 0px;
+                border-bottom-width: 0px;
+                border-bottom: 1px solid $mediumGreyColor;
+
+                padding-bottom: 8px;
+
+                outline: 0px;
+
+                &:focus {
+                    border-color: $primaryColor;
+                }
+            }
+        }
+
+        button {
+            width: 100%;
+            height: 56px;
+            background-color: $primaryColor;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+    }
+
+    @media screen and (min-width: $mediaQueryDesktop) {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        .logo {
+            width: 40%;
+            margin: 0px;
+        }
+
+        .form {
+            border: 1px solid $primaryColor;
+            border-radius: 32px;
+            padding: 80px 40px;
+
+            div {
+                img {
+                    width: 22px;
+                    height: 22px;
+                }
+
+                input {
+                    width: 343px;
+                    font-size: 16px;
+                }
+            }
+
+            button {
+                font-size: 18px;
+            }
+        }
+    }
+}
