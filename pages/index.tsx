@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import { Login } from '../containers/Login'
+import { Principal } from '../containers/Principal';
 
 const Home: NextPage = () => {
   const [accessToken, setAccessToken] = useState("");
@@ -17,9 +18,13 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div>
-      {!accessToken ? <Login setAccessToken={setAccessToken} /> : "Bem vindo!"}     
-    </div>
+    <>
+      {
+        !accessToken ? 
+          <Login setAccessToken={setAccessToken} /> :
+          <Principal setAccessToken={setAccessToken} />
+      }     
+    </>
   )
 }
 

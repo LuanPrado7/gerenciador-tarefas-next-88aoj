@@ -8,16 +8,16 @@
     src: url('../public/fonts/BiennaleRegular.otf') format('opentype');
 }
 
-html {
+html{
     height: 100%;
 }
 
-body {
+body{
     height: 100%;
     font-family: 'Biennale Regular';
 }
 
-#__next {
+#__next{
     height: 100%;
     display: flex;
     flex: 1 1 0%;
@@ -29,4 +29,7 @@ body {
     padding: 0px;
 }
 
-@import './login.scss'
+@import './login.scss';
+@import './header.scss';
+@import './footer.scss';
+@import './list.scss';

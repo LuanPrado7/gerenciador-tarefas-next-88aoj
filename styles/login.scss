@@ -1,20 +1,23 @@
 @import './config.scss';
 
-.container-login {
+.container-login{
 
-    .logo {
+    .logo{
+        width: 178.35px;
         display: block;
         margin: auto;
-        width: 178.35px;
-        margin-bottom: 47px;
+        margin-bottom: 30px;
     }
 
-    .form {
-        p {
-            color: $primaryColor;
+    .form{
+        p{
+            text-align: center;
+            color: $errorColor;
+            font-weight: bold;
+            max-width: 300px;
         }
 
-        div {
+        div{
             display: flex;
             padding: 10px;
 
@@ -22,9 +25,9 @@
                 width: 20px;
                 height: 20px;
                 margin-right: 18px;
+                margin-top: 1px;
             }
-
-            input {
+            input{
                 width: 224px;
                 font-size: 14px;
                 letter-spacing: 0.01em;
@@ -33,26 +36,39 @@
                 border-top-width: 0px;
                 border-left-width: 0px;
                 border-right-width: 0px;
-                border-bottom-width: 0px;
                 border-bottom: 1px solid $mediumGreyColor;
 
                 padding-bottom: 8px;
 
-                outline: 0px;
+                outline: none;
 
-                &:focus {
-                    border-color: $primaryColor;
+                &:focus{
+                    border-bottom-color: $primaryColor;
+                }
+
+                &::placeholder{
+                    color: $mediumGreyColor;
+                    opacity: 1;
+                }
+
+                &:-ms-input-placeholder{
+                    color: $mediumGreyColor;
+                }
+
+                &::-ms-input-placeholder{
+                    color: $mediumGreyColor;
                 }
             }
         }
 
-        button {
+        button{
             width: 100%;
             height: 56px;
             background-color: $primaryColor;
-            color: #FFFFFF;
             border: none;
+            color: white;
             border-radius: 12px;
+            font-size: 16px;
             margin-top: 30px;
         }
     }
@@ -62,30 +78,35 @@
         display: flex;
         align-items: center;
         justify-content: space-around;
-
-        .logo {
+        
+        .logo{
             width: 40%;
             margin: 0px;
         }
 
-        .form {
+        .form{
             border: 1px solid $primaryColor;
             border-radius: 32px;
             padding: 80px 40px;
+            margin-left: 20px;
 
-            div {
-                img {
+            p{
+                max-width: none;
+            }
+
+            div{
+                img{
                     width: 22px;
                     height: 22px;
                 }
 
-                input {
+                input{
                     width: 343px;
                     font-size: 16px;
                 }
             }
 
-            button {
+            button{
                 font-size: 18px;
             }
         }
