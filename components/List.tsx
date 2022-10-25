@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import type {NextPage} from 'next';
+import { Item } from './Item';
 
 type ListProps = {
     list: Array<any>
@@ -7,10 +8,10 @@ type ListProps = {
 
 export const List : NextPage<ListProps> = ({list}) =>{
     return (
-        <div className='container-list'>
+        <div className={'container-list' + (list && list.length > 0 ? ' not-empty' : '')}>
             {
                 list && list.length > 0 
-                ? list.map(i => <p key={i._id}>{i.name}</p>) 
+                ? list.map(i => <Item key={i._id} task={i}/>) 
                 :
                     <>
                         <img src="/empty.svg" alt='Nenhum registro encontrado'/>
