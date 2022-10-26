@@ -2,7 +2,19 @@
 import type {NextPage} from 'next';
 import { useState } from 'react';
 
-export const Filter : NextPage = () =>{
+type FilterProps ={
+    previsionDateStart: string,
+    previsionDateEnd: string,
+    status: number,
+    setPrevisionDateStart(s:string) : void,
+    setPrevisionDateEnd(s:string) : void,
+    setStatus(n:number) : void,
+}
+
+export const Filter : NextPage<FilterProps> = ({
+    previsionDateStart, previsionDateEnd, status,
+    setPrevisionDateStart, setPrevisionDateEnd, setStatus
+}) =>{
 
     const [showFilters, setShowFilters] = useState(false);
 
@@ -14,16 +26,16 @@ export const Filter : NextPage = () =>{
                 <div className='form'>
                     <div>
                         <label>Data prevista de conclusão:</label>
-                        <input type="date"/>
+                        <input type="date" value={previsionDateStart} onChange={e => setPrevisionDateStart(e.target.value)}/>
                     </div>
                     <div>
                         <label>até</label>
-                        <input type="date"/>
+                        <input type="date" value={previsionDateEnd} onChange={e => setPrevisionDateEnd(e.target.value)}/>
                     </div>
                     <div className='separator'/>
                     <div>
                         <label>Status</label>
-                        <select>
+                        <select value={status} onChange={e => setStatus(parseInt(e.target.value))}>
                             <option value={0}>Todas</option>
                             <option value={1}>Ativas</option>
                             <option value={2}>Concluídas</option>
@@ -34,16 +46,16 @@ export const Filter : NextPage = () =>{
             {showFilters && <div className='mobile-filters'>
                     <div>
                         <label>Data previsão de:</label>
-                        <input type="date"/>
+                        <input type="date" value={previsionDateStart} onChange={e => setPrevisionDateStart(e.target.value)}/>
                     </div>
                     <div>
                         <label>Data previsão até:</label>
-                        <input type="date"/>
+                        <input type="date" value={previsionDateEnd} onChange={e => setPrevisionDateEnd(e.target.value)}/>
                     </div>
                     <div className='separator'/>
                     <div>
                         <label>Status:</label>
-                        <select>
+                        <select value={status} onChange={e => setStatus(parseInt(e.target.value))}>
                             <option value={0}>Todas</option>
                             <option value={1}>Ativas</option>
                             <option value={2}>Concluídas</option>

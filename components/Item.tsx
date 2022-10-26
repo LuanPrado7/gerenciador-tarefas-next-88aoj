@@ -4,10 +4,11 @@ import type {NextPage} from 'next';
 import { Task } from '../types/Task';
 
 type ItemProps = {
-    task: Task
+    task: Task,
+    selectTask(task:Task) :void
 }
 
-export const Item : NextPage<ItemProps> = ({task}) =>{
+export const Item : NextPage<ItemProps> = ({task, selectTask}) =>{
     const isTaskFinished = task.finishDate || false;
 
     const getDateText = (finishDate: Date | undefined, finishPrevisionDate : Date) => {
@@ -18,7 +19,8 @@ export const Item : NextPage<ItemProps> = ({task}) =>{
     }
 
     return (
-        <div className={'container-item' + (isTaskFinished ? '' : ' active')}>
+        <div className={'container-item' + (isTaskFinished ? '' : ' active')}
+            onClick={e => isTaskFinished ? null : selectTask(task)}>
             <img src={isTaskFinished ? 'checked.svg' : 'not-checked.svg'} alt={isTaskFinished ? 'Tarefa em aberto' : 'Tarefa concluída'}/>
             <div>
                 <p className={isTaskFinished ? 'finished' : ''}>{task.name}</p>

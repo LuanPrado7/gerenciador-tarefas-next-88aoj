@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type {NextPage} from 'next';
 import { useState } from 'react';
-import { executeRequest } from '../services/apis';
+import { executeRequest } from '../services/api';
 
 type LoginProps = {
     setAccessToken(s:string) : void
