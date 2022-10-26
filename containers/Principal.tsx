@@ -38,7 +38,7 @@ export const Principal : NextPage<PrincipalProps> = ({setAccessToken}) =>{
     return (
         <>
             <Header sair={sair}/>
-            <Filter/>
+            <Filter />
             <List list={list}/>
             <Footer />
         </>

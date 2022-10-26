@@ -29,20 +29,13 @@ body{
     padding: 0px;
 }
 
-@import './login.scss';
-@import './header.scss';
-@import './footer.scss';
-@import './list.scss';
-@import './item.scss';
-@import './filter.scss';
-
 input, select {
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     letter-spacing: 0.01em;
     color: $primaryColor;
-    min-width: 180px;
+    min-width: 150px;
     background-color: transparent;
     font-family: 'Biennale Regular';
 
@@ -74,7 +67,7 @@ input, select {
     }
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width:$mediaQueryDesktop) {
     input, select {
         border-top-width: 1px;
         border-left-width: 1px;
@@ -84,4 +77,15 @@ input, select {
         padding: 5px;
         outline: none;
     }
+
+    select{
+        min-width: 110px;
+    }
 }
+
+@import './login.scss';
+@import './header.scss';
+@import './footer.scss';
+@import './list.scss';
+@import './item.scss';
+@import './filter.scss';
