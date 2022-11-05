@@ -1,22 +1,158 @@
+/* eslint-disable @next/next/no-img-element */
 import type {NextPage} from 'next';
-import { Component } from 'react';
+import { useState } from 'react';
+import { executeRequest } from '../services/api';
 
-export const Login : NextPage = () =>{
+type LoginProps = {
+    setAccessToken(s:string) : void
+}
+
+export const Login : NextPage<LoginProps> = ({setAccessToken}) =>{
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [isSignUp, setIsSignUp] = useState(false);
+
+    const [nameSignUp, setNameSignUp] = useState('');
+    const [emailSignUp, setEmailSignUp] = useState('');
+    const [passwordSignUp, setPasswordSignUp] = useState('');
+    const [confirmPasswordSignUp, setConfirmPasswordSignUp] = useState('');
+    const [loadingSignUp, setLoadingSignUp] = useState(false);
+    const [errorSignUp, setErrorSignUp] = useState('');
+
+    const doLogin = async() => {
+        try{
+            if(!email || !password){
+                return setError('Favor preencher os campos.');
+            }
+
+            setLoading(true);
+
+            const body = {
+                login: email,
+                password
+            };
+
+            const result = await executeRequest('login', 'POST', body);
+            if(result && result.data){
+               localStorage.setItem('accessToken', result.data.token);
+               localStorage.setItem('name', result.data.name);
+               localStorage.setItem('email', result.data.email);
+               setAccessToken(result.data.token);
+            }
+        }catch(e : any){
+            console.log('Ocorreu erro ao efetuar login:', e);
+            if(e?.response?.data?.error){
+                setError(e?.response?.data?.error);
+            }else{
+                setError('Ocorreu erro ao efetuar login, tente novamente.');
+            }
+        }
+
+        setLoading(false);
+    }
+
+    const doSignUp = async() => {
+        try{
+            if(!emailSignUp || !passwordSignUp || !nameSignUp || !confirmPasswordSignUp){
+                return setErrorSignUp('Favor preencher os campos.');
+            } else if(confirmPasswordSignUp != passwordSignUp) {
+                return setErrorSignUp('As senhas não coincidem.');
+            }
+
+            setLoadingSignUp(true);
+
+            const body = {
+                name: nameSignUp,
+                email: emailSignUp,
+                password: passwordSignUp
+            };
+
+            const result = await executeRequest('user', 'POST', body);
+            if(result && result.data){
+               
+                const body = {
+                    login: emailSignUp,
+                    password: passwordSignUp
+                };
+    
+                const result = await executeRequest('login', 'POST', body);
+                if(result && result.data){
+                   localStorage.setItem('accessToken', result.data.token);
+                   localStorage.setItem('name', result.data.name);
+                   localStorage.setItem('email', result.data.email);
+                   setAccessToken(result.data.token);
+                }
+            }
+        }catch(e : any){
+            console.log('Ocorreu erro ao efetuar o cadastro:', e);
+            if(e?.response?.data?.error){
+                setErrorSignUp(e?.response?.data?.error);
+            }else{
+                setErrorSignUp('Ocorreu erro ao efetuar o cadastro, tente novamente.');
+            }
+        }
+
+        setLoadingSignUp(false);
+    }
 
     return (
-        <div>
-            <img src='/logo.svg' alt='Logo Fiap'/>
-            <div className="form">
-                <div>
-                    <img src='/mail.svg' alt='Login'/> 
-                    <input type="text" placeholder="Login" />
-                </div>
-                <div>
-                    <img src='/lock.svg' alt='Senha'/> 
-                    <input type="password" placeholder="Senha" />
-                </div>
-                <button type='button'>Login</button>
-            </div>
-        </div>
+        <>        
+            <div className='container-login'>            
+                <img src='/logo.svg' alt='Logo Fiap' className='logo'/>
+                <div className="form">
+                    {!isSignUp ? 
+                        <div className='form-login'>
+                            {error && <p>{error}</p>}
+                            <div>
+                                <img src='/mail.svg' alt='Login'/> 
+                                <input type="text" placeholder="Login" 
+                                    value={email} onChange={e => setEmail(e.target.value)}/>
+                            </div>
+                            <div>
+                                <img src='/lock.svg' alt='Senha'/> 
+                                <input type="password" placeholder="Senha" 
+                                    value={password} onChange={e => setPassword(e.target.value)}/>
+                            </div>
+                            <button type='button' onClick={doLogin} disabled={loading}>{loading ? '...Carregando' : 'Login'}</button>
+                            <div className='divider'>
+                                <hr className="solid"/>
+                                <span>OU</span>
+                                <hr className="solid"/>
+                            </div>
+                            <button className='button-cadastrar' type='button' onClick={_ => setIsSignUp(true)}>Cadastrar</button>
+                        </div>                                
+                        : 
+                        <div>
+                            {errorSignUp && <p>{errorSignUp}</p>}
+                            <div>
+                                <img src='/user.svg' alt='Nome'/> 
+                                <input type="text" placeholder="Nome" 
+                                    value={nameSignUp} onChange={e => setNameSignUp(e.target.value)}/>
+                            </div>
+                            <div>
+                                <img src='/mail.svg' alt='Email'/> 
+                                <input type="text" placeholder="E-mail" 
+                                    value={emailSignUp} onChange={e => setEmailSignUp(e.target.value)}/>
+                            </div>
+                            <div>
+                                <img src='/lock.svg' alt='Senha'/> 
+                                <input type="password" placeholder="Senha" 
+                                    value={passwordSignUp} onChange={e => setPasswordSignUp(e.target.value)}/>
+                            </div>
+                            <div>
+                                <img src='/lock.svg' alt='Confirmar Senha'/> 
+                                <input type="password" placeholder="Confirmar Senha" 
+                                    value={confirmPasswordSignUp} onChange={e => setConfirmPasswordSignUp(e.target.value)}/>
+                            </div>
+                            <button type='button' onClick={doSignUp} disabled={loadingSignUp}>{loadingSignUp ? '...Carregando' : 'Cadastrar'}</button>
+                            <button className='button-cancelar' type='button' onClick={_ => setIsSignUp(false)}>Cancelar</button>
+                        </div>
+                    }           
+                </div>       
+            </div>        
+        </>
     );
 }
