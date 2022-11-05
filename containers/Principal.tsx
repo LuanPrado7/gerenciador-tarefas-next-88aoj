@@ -26,6 +26,7 @@ export const Principal : NextPage<PrincipalProps> = ({setAccessToken}) =>{
     const [error, setError] = useState('');
     const [name, setName] = useState('');
     const [previsionDate, setPrevisionDate] = useState('');
+    const [dateInputType, setDateInputType] = useState('text');
 
     const sair = () =>{
         localStorage.clear();
@@ -115,7 +116,8 @@ export const Principal : NextPage<PrincipalProps> = ({setAccessToken}) =>{
                         {error && <p className='error'>{error}</p>}
                         <input type="text" placeholder='Nome da tarefa'
                             value={name} onChange={e => setName(e.target.value)}/>
-                        <input type="date" placeholder='Data de previsão da tarefa'
+                        <input type={dateInputType} placeholder='Data de previsão da tarefa' 
+                            onFocus={e => setDateInputType('date')} onBlur={e => !e.target.value ? setDateInputType('text') : false}
                             value={previsionDate} onChange={e => setPrevisionDate(e.target.value)}/>
                 </Modal.Body>
                 <Modal.Footer>
